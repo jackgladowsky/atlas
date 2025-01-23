@@ -1,5 +1,6 @@
 from openai import OpenAI
 from pydantic import BaseModel, Field
+from atlas.spinner import Spinner
 
 import os
 from dotenv import load_dotenv
@@ -58,6 +59,7 @@ class ChatModel:
                 print("Goodbye!")
                 loop = False
             else:
-                request = ChatRequest(prompt=user_input)
-                response = self(request)
-                print(f"ATLAS: {response.text}")
+                with Spinner():
+                    request = ChatRequest(prompt=user_input)
+                    response = self(request)
+                    print(f"ATLAS: {response.text}")
